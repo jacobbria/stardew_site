@@ -34,7 +34,7 @@ onMounted(() => {
       <a class="wooden_imgBtn_Global" href="#projects">
         <img :src="ProjectsBtn" alt="Projects" />
       </a>
-      <a class="wooden_imgBtn_Global" href="#school">
+      <a class="wooden_imgBtn_Global" href="#graduation-section">
         <img :src="SchoolBtn" alt="School" />
       </a>
       <a class="wooden_imgBtn_Global" href="#work">
