@@ -45,12 +45,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
-html, body, #app { height: 100%; margin: 0; }
+
 .landing {
-  position: fixed;
-  inset: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 100vh;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -68,8 +68,8 @@ html, body, #app { height: 100%; margin: 0; }
   width: 100vw;
   text-align: center;
   font-size: clamp(2.5rem, 7vw, 6rem);
-  color: #f4ffff;
-  text-shadow: 10px 4px 10px #000, 0 1px 0 #000000;
+  color: #eeeeee;
+  text-shadow: 3px 2px 4px #181818, 0 1px 0 #1a1a1a;
   letter-spacing: 0.08em;
   z-index: 3;
   font-weight: 700;
