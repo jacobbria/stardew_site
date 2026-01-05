@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import LandingView from '../assets/Backgrounds/landing_pixel.gif'
-import AboutBtn from '../assets/IMG/Button/About_Btn.png'
-import ProjectsBtn from '../assets/IMG/Button/Projects_Btn.png'
-import SchoolBtn from '../assets/IMG/Button/School_Btn.png'
-import WorkBtn from '../assets/IMG/Button/Work_Btn.png'
+import LandingView from '../../assets/Backgrounds/landing_pixel.gif'
+import AboutBtn from '../../assets/IMG/Button/About_Btn.png'
+import ProjectsBtn from '../../assets/IMG/Button/Projects_Btn.png'
+import SchoolBtn from '../../assets/IMG/Button/School_Btn.png'
+import WorkBtn from '../../assets/IMG/Button/Work_Btn.png'
 
 const fullTitle = 'Jake Bria'
 const displayedTitle = ref('')
@@ -27,17 +27,17 @@ onMounted(() => {
     <div class="landing-title pixel-font">
       <span>{{ displayedTitle }}</span><span class="type-cursor">|</span>
     </div>
-    <nav class="landing__buttons" aria-label="Landing buttons">
-      <a class="landing__button" href="#about">
+    <nav class="wooden__buttons" aria-label="Landing buttons">
+      <a class="wooden_imgBtn_Global" href="#about">
         <img :src="AboutBtn" alt="About" />
       </a>
-      <a class="landing__button" href="#projects">
+      <a class="wooden_imgBtn_Global" href="#projects">
         <img :src="ProjectsBtn" alt="Projects" />
       </a>
-      <a class="landing__button" href="#school">
+      <a class="wooden_imgBtn_Global" href="#school">
         <img :src="SchoolBtn" alt="School" />
       </a>
-      <a class="landing__button" href="#work">
+      <a class="wooden_imgBtn_Global" href="#work">
         <img :src="WorkBtn" alt="Work" />
       </a>
     </nav>
@@ -86,67 +86,6 @@ onMounted(() => {
   51%, 100% { opacity: 0; }
 }
 
-.landing__buttons {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(25px, 4vh, 36px);
-  transform: translateX(-50%);
-  width: min(1100px, 92vw);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding: 0 1rem;
-  z-index: 2;
-  pointer-events: auto;
-  transition: filter 0.3s ease;
-}
 
-.landing__button img {
-  display: block;
-  width: clamp(80px, 8vw, 200px);
-  height: auto;
-}
-
-
-.landing__button {
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
-  transition: filter 180ms ease, transform 180ms ease;
-  will-change: filter, transform;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.28));
-}
-
-.landing__button:hover,
-.landing__button:focus {
-  filter: drop-shadow(0 14px 28px rgba(0,0,0,0.38));
-  transform: translateY(-3px);
-  filter: brightness(1.2)
-}
-
-
-@media (max-width: 900px) {
-  .landing__buttons {
-    justify-content: center;
-    gap: clamp(10px, 4vw, 20px);
-    flex-wrap: wrap;
-    padding: 0 0.5rem;
-  }
-
-}
-
-@media (max-width: 420px) {
-  .landing__buttons {
-    flex-direction: column;
-  }
-
-}
-
-@media (max-width: 320px) {
-  .landing__buttons {
-    bottom: 70px;
-  }
-}
 
 </style>

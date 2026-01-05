@@ -15,8 +15,72 @@ body, .pixel-font {
   a:hover {
     filter: brightness(1.2);
   }
+
+
+
+
+}
+
+.wooden_imgBtn_Global img {
+  display: block;
+  width: clamp(80px, 8vw, 200px);
+  height: auto;
+}
+
+
+.wooden_imgBtn_Global {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  transition: filter 180ms ease, transform 180ms ease;
+  will-change: filter, transform;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.28));
+}
+
+.wooden_imgBtn_Global:hover,
+.wooden_imgBtn_Global:focus {
+  filter: drop-shadow(0 14px 28px rgba(0,0,0,0.38));
+  transform: translateY(-3px);
+  filter: brightness(1.2)
+}
+
+.wooden__buttons {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(25px, 4vh, 36px);
+  transform: translateX(-50%);
+  width: min(1100px, 92vw);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  z-index: 2;
+  pointer-events: auto;
+  transition: filter 0.3s ease;
 }
 
 
 
+@media (max-width: 900px) {
+  .wooden__buttons {
+    justify-content: center;
+    gap: clamp(10px, 4vw, 20px);
+    flex-wrap: wrap;
+    padding: 0 0.5rem;
+  }
 
+}
+
+@media (max-width: 420px) {
+  .wooden__buttons {
+    flex-direction: column;
+  }
+
+}
+
+@media (max-width: 320px) {
+  .wooden__buttons {
+    bottom: 70px;
+  }
+}

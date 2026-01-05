@@ -1,16 +1,15 @@
 <template>
   <div class="graduation-bg">
-    <div class="graduation-content">
-      <button class="degree-btn">Degree 1</button>
-      <button class="degree-btn">Degree 2</button>
+    <div class="wooden_buttons_grad">
+      <img class="wooden_imgBtn_Global" :src="AAsBtn" alt="AAS Degree" />
+      <img class="wooden_imgBtn_Global" :src="BSBtn" alt="BS Degree" />
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'GraduationView',
-};
+<script setup>
+import AAsBtn from '../../assets/IMG/Button/AAS_Btn.png'
+import BSBtn from '../../assets/IMG/Button/BS_Btn.png'
 </script>
 
 <style scoped>
@@ -22,24 +21,13 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.graduation-content {
+.wooden_buttons_grad {
   display: flex;
   gap: 2rem;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  transform: translateY(50%);
 }
-.degree-btn {
-  font-size: 2rem;
-  padding: 1.5rem 3rem;
-  background: rgba(255,255,255,0.85);
-  border: none;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-.degree-btn:hover {
-  background: rgba(255,255,255,1);
-}
+
 </style>
