@@ -6,6 +6,9 @@
     <section id="graduation-section">
       <GraduationView />
     </section>
+    <section id="projects-section">
+      <ProjectsPage />
+    </section>
     <!-- Add more sections/components here as needed -->
   </div>
 </template>
@@ -13,6 +16,7 @@
 <script setup>
 import HomeView from './HomePage_Views/HomeView.vue';
 import GraduationView from './HomePage_Views/GraduationView.vue';
+import ProjectsPage from './HomePage_Views/ProjectsPage.vue';
 </script>
 
 <style scoped>
