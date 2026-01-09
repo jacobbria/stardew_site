@@ -1,11 +1,11 @@
 <template>
   <div class="projects-page" id="projects">
     <div class="background"></div>
-    <div class="buttons-container">
-      <button class="project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 1" /></button>
-      <button class="project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 2" /></button>
-      <button class="project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 3" /></button>
-      <button class="project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 4" /></button>
+    <div class="wooden_buttons_grad buttons-container">
+      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 1" /></button>
+      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 2" /></button>
+      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 3" /></button>
+      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 4" /></button>
     </div>
   </div>
 </template>
