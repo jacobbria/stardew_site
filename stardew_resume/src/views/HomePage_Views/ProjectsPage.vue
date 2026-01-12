@@ -1,22 +1,34 @@
 <template>
   <div class="projects-page" id="projects">
+
     <div class="background"></div>
+    <InfoWindow
+     v-model:visible="showInfoWindow"
+     />
+
+
     <div class="wooden_buttons_grad buttons-container">
-      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 1" /></button>
-      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 2" /></button>
-      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 3" /></button>
-      <button class="wooden_imgBtn_Global project-btn"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 4" /></button>
+      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 1" /></button>
+      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 2" /></button>
+      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 3" /></button>
+      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 4" /></button>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProjectsPage',
-};
+<script setup>
+import { ref } from 'vue';
+import InfoWindow from '@/components/InfoWindow.vue';
+
+const showInfoWindow = ref(false);
+
+function showProject() {
+  showInfoWindow.value = true;
+}
+
 </script>
 
-<style scoped>
+  <style scoped>
 .projects-page {
   position: relative;
   width: 100vw;
@@ -74,4 +86,7 @@ export default {
 .project-btn:hover {
   transform: scale(1.05);
 }
+
+
+
 </style>
