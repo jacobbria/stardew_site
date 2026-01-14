@@ -2,14 +2,17 @@
   <div class="graduation-bg">
     <InfoWindow
       v-model:visible="showInfoWindow"
+      :content="selectedDegree"
     />
 
     <div class="wooden_buttons_grad">
-      <button class="wooden_imgBtn_Global education-btn" @click="showEducation('AAS')">
-        <img :src="AAsBtn" alt="AAS Degree" />
+      <button class="wooden-btn-shared education-btn-blank" @click="showEducation('AAS Software Dev.\nSinclair College\n2022')">
+        <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
+        <span class="btn-text">Ass.<br>Degree</span>
       </button>
-      <button class="wooden_imgBtn_Global education-btn" @click="showEducation('BS')">
-        <img :src="BSBtn" alt="BS Degree" />
+      <button class="wooden-btn-shared education-btn-blank" @click="showEducation('BS')">
+        <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
+        <span class="btn-text">Bach.<br>Degree</span>
       </button>
     </div>
   </div>
@@ -18,19 +21,19 @@
 <script setup>
 import { ref } from 'vue';
 import InfoWindow from '@/components/InfoWindow.vue';
-import AAsBtn from '../../assets/IMG/Button/AAS_Btn.png'
-import BSBtn from '../../assets/IMG/Button/BS_Btn.png'
 
 const showInfoWindow = ref(false);
+const selectedDegree = ref('');
 
 function showEducation(degree) {
+  selectedDegree.value = degree;
   showInfoWindow.value = true;
-  // You can use the degree parameter to show different content
-  console.log('Showing info for:', degree);
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .graduation-bg {
   position: relative;
   width: 100vw;
@@ -50,23 +53,7 @@ function showEducation(degree) {
   transform: translateY(50%);
 }
 
-.education-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  transition: transform 0.2s;
+.education-btn-blank {
+  display: inline-block;
 }
-
-.education-btn img {
-  width: auto;
-  height: auto;
-  display: block;
-}
-
-.education-btn:hover {
-  transform: scale(1.05);
-}
-
 </style>

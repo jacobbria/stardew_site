@@ -4,14 +4,19 @@
     <div class="background"></div>
     <InfoWindow
      v-model:visible="showInfoWindow"
+     :content="selectedProject"
      />
 
 
     <div class="wooden_buttons_grad buttons-container">
-      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 1" /></button>
-      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 2" /></button>
-      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 3" /></button>
-      <button class="wooden_imgBtn_Global project-btn" @click="showProject()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Project 4" /></button>
+      <button
+        v-for="project in projects"
+        :key="project.id"
+        class="wooden_imgBtn_Global wooden-btn-shared"
+        @click="showProject(project)">
+        <img src="@/assets/IMG/Button/Blank_Btn.png" :alt="project.name" class="btn-bg" />
+        <span class="btn-text">{{ project.name }}</span>
+      </button>
     </div>
   </div>
 </template>
@@ -21,8 +26,17 @@ import { ref } from 'vue';
 import InfoWindow from '@/components/InfoWindow.vue';
 
 const showInfoWindow = ref(false);
+const selectedProject = ref(null);
 
-function showProject() {
+const projects = [
+  { id: 1, name: 'project 1', text: 'Description for project 1' },
+  { id: 2, name: 'project 2', text: 'Description for project 2' },
+  { id: 3, name: 'project 3', text: 'Description for project 3' },
+  { id: 4, name: 'project 4', text: 'Description for project 4' }
+];
+
+function showProject(project) {
+  selectedProject.value = project.text;
   showInfoWindow.value = true;
 }
 
@@ -44,49 +58,6 @@ function showProject() {
   background: url('@/assets/Backgrounds/forge_gif.gif') center center/cover no-repeat;
   z-index: 1;
 }
-.buttons-container {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  z-index: 2;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 2rem;
-  padding-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-  .buttons-container {
-    position: relative;
-    flex-direction: column;
-    width: 100vw;
-    left: 0;
-    bottom: 0;
-    padding: 8rem 0;
-    align-items: center;
-    justify-content: center;
-  }
-}
-.project-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  transition: transform 0.2s;
-}
-.project-btn img {
-  width: 160px;
-  height: auto;
-  display: block;
-}
-.project-btn:hover {
-  transform: scale(1.05);
-}
-
 
 
 </style>

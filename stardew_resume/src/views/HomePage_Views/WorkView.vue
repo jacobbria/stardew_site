@@ -4,13 +4,19 @@
     <div class="background"></div>
     <InfoWindow
      v-model:visible="showInfoWindow"
+     :content="selectedWork"
      />
 
 
     <div class="wooden_buttons_grad buttons-container">
-      <button class="wooden_imgBtn_Global work-btn" @click="showWork()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Work 1" /></button>
-      <button class="wooden_imgBtn_Global work-btn" @click="showWork()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Work 2" /></button>
-      <button class="wooden_imgBtn_Global work-btn" @click="showWork()"><img src="@/assets/IMG/Button/Projects_Btn.png" alt="Work 3" /></button>
+      <button
+        v-for="work in workExperiences"
+        :key="work.id"
+        class="wooden_imgBtn_Global wooden-btn-shared"
+        @click="showWork(work)">
+        <img src="@/assets/IMG/Button/Blank_Btn.png" :alt="work.name" class="btn-bg" />
+        <span class="btn-text">{{ work.name }}</span>
+      </button>
     </div>
   </div>
 </template>
@@ -20,8 +26,16 @@ import { ref } from 'vue';
 import InfoWindow from '@/components/InfoWindow.vue';
 
 const showInfoWindow = ref(false);
+const selectedWork = ref(null);
 
-function showWork() {
+const workExperiences = [
+  { id: 1, name: 'Work 1', description: 'Description for work experience 1' },
+  { id: 2, name: 'Work 2', description: 'Description for work experience 2' },
+  { id: 3, name: 'Work 3', description: 'Description for work experience 3' }
+];
+
+function showWork(work) {
+  selectedWork.value = work.description;
   showInfoWindow.value = true;
 }
 
@@ -43,48 +57,7 @@ function showWork() {
   background: url('@/assets/Backgrounds/office_gif.gif') center center/cover no-repeat;
   z-index: 1;
 }
-.buttons-container {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  z-index: 2;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 2rem;
-  padding-bottom: 2rem;
-}
 
-@media (max-width: 768px) {
-  .buttons-container {
-    position: relative;
-    flex-direction: column;
-    width: 100vw;
-    left: 0;
-    bottom: 0;
-    padding: 8rem 0;
-    align-items: center;
-    justify-content: center;
-  }
-}
-.work-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  transition: transform 0.2s;
-}
-.work-btn img {
-  width: 160px;
-  height: auto;
-  display: block;
-}
-.work-btn:hover {
-  transform: scale(1.05);
-}
 
 
 

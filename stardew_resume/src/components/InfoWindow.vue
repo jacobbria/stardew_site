@@ -2,6 +2,7 @@
       <div class="Info_Window" v-if="visible">
         <div class="window">
           <img src="../assets/IMG/Button/Blank_Btn.png" alt="Blank Button" />
+          <div class="content-text" v-if="content">{{ content }}</div>
           <button class="close-btn" @click="closeWindow">
             <img src="../assets/IMG/Button/x_btn.png" alt="Close" />
           </button>
@@ -16,6 +17,10 @@ defineProps({
   visible: {
     type: Boolean,
     default: false,
+  },
+  content: {
+    type: String,
+    default: '',
   },
 });
 
@@ -47,10 +52,26 @@ function closeWindow() {
   position: relative;
 }
 .Info_Window img {
-  width: 350px;
+  width: 400px;
   max-width: 90vw;
   height: auto;
   display: block;
+}
+
+.content-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  color: #000;
+  text-align: center;
+  padding: 1rem;
+  max-width: 95%;
+  line-height: 1.8;
+  pointer-events: none;
+  white-space: pre-line;
 }
 
 .close-btn {
@@ -70,5 +91,22 @@ function closeWindow() {
 .close-btn img {
   width: 30px;
   height: 30px;
+}
+
+
+
+@media (max-width: 768px) {
+  .content-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-text {
+    font-size: .7rem;
+    line-height: 1.4;
+    padding: 0.5rem;
+  }
 }
 </style>

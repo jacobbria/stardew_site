@@ -1,13 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import LandingView from '../../assets/Backgrounds/landing_pixel.gif'
-import AboutBtn from '../../assets/IMG/Button/About_Btn.png'
-import ProjectsBtn from '../../assets/IMG/Button/Projects_Btn.png'
-import SchoolBtn from '../../assets/IMG/Button/School_Btn.png'
-import WorkBtn from '../../assets/IMG/Button/Work_Btn.png'
 
 const fullTitle = 'Jake Bria'
 const displayedTitle = ref('')
+const navButtons = [
+  { title: 'Projects', section: 'projects-section' },
+  { title: 'Work', section: 'work-section' },
+  { title: 'School', section: 'graduation-section' },
+  { title: 'Links', section: 'links-section' }
+]
+
 
 onMounted(() => {
   let i = 0
@@ -20,6 +23,13 @@ onMounted(() => {
   }
   type()
 })
+
+function scrollToSection(sectionId) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 </script>
 
 <template>
@@ -28,23 +38,21 @@ onMounted(() => {
       <span>{{ displayedTitle }}</span><span class="type-cursor">|</span>
     </div>
     <nav class="wooden__buttons" aria-label="Landing buttons">
-      <a class="wooden_imgBtn_Global" href="#about">
-        <img :src="AboutBtn" alt="About" />
-      </a>
-      <a class="wooden_imgBtn_Global" href="#projects">
-        <img :src="ProjectsBtn" alt="Projects" />
-      </a>
-      <a class="wooden_imgBtn_Global" href="#graduation-section">
-        <img :src="SchoolBtn" alt="School" />
-      </a>
-      <a class="wooden_imgBtn_Global" href="#work">
-        <img :src="WorkBtn" alt="Work" />
-      </a>
+      <button
+        v-for="button in navButtons"
+        :key="button.section"
+        class="education-btn-blank"
+        @click="scrollToSection(button.section)"
+      >
+        <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
+        <span class="btn-text">{{ button.title }}</span>
+      </button>
     </nav>
   </main>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .landing {
   position: relative;
@@ -86,6 +94,48 @@ onMounted(() => {
   51%, 100% { opacity: 0; }
 }
 
+.education-btn-blank {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.2s;
+  position: relative;
+  display: inline-block;
+}
 
+.education-btn-blank:hover {
+  transform: scale(1.05);
+}
+
+.btn-bg {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.btn-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.6;
+  pointer-events: none;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .btn-text {
+    font-size: 0.8rem;
+  }
+}
 
 </style>
