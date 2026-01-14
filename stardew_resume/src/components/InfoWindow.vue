@@ -67,7 +67,7 @@ function closeWindow() {
   font-size: 0.8rem;
   color: #000;
   text-align: center;
-  padding: 1rem;
+  padding: .4rem;
   max-width: 95%;
   line-height: 1.8;
   pointer-events: none;

@@ -29,10 +29,10 @@ const showInfoWindow = ref(false);
 const selectedProject = ref(null);
 
 const projects = [
-  { id: 1, name: 'project 1', text: 'Description for project 1' },
-  { id: 2, name: 'project 2', text: 'Description for project 2' },
-  { id: 3, name: 'project 3', text: 'Description for project 3' },
-  { id: 4, name: 'project 4', text: 'Description for project 4' }
+  { id: 1, name: 'SWA', text: 'Deploy SWA in AZ using CI/CD pipeline and modern web dev practices.' },
+  { id: 2, name: 'Wazuh', text: 'Deploy Wazuh for an XDR and SIEM capabilities on a local network.' },
+  { id: 3, name: 'Game App', text: 'Build local app to inventory and buid load outs for Remnant 2.' },
+  { id: 4, name: 'Student App', text: 'Project lead for Java/Vue app for Web Dev Club at Franklin U.' }
 ];
 
 function showProject(project) {

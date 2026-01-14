@@ -29,9 +29,9 @@ const showInfoWindow = ref(false);
 const selectedWork = ref(null);
 
 const workExperiences = [
-  { id: 1, name: 'Work 1', description: 'Description for work experience 1' },
-  { id: 2, name: 'Work 2', description: 'Description for work experience 2' },
-  { id: 3, name: 'Work 3', description: 'Description for work experience 3' }
+  { id: 1, name: 'AYS', description: 'Field Technician (2019-2025)' },
+  { id: 2, name: 'DDC', description: 'Service Desk Technician (2025)' },
+  { id: 3, name: 'John Hopkins', description: 'Sr. Client Specialist (2025-Present)' }
 ];
 
 function showWork(work) {
