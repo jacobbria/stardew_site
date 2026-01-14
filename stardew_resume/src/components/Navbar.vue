@@ -1,46 +1,58 @@
 <template>
-  <div class="custom-navbar">
-    <v-img src="/src/assets/IMG/Button/JB_Btn.png" class="jb-btn" max-width="80" max-height="80" />
-    <div class="nav-icons">
-      <a v-for="item in navItems" :key="item.label" :href="item.to" :target="item.img ? '_blank' : '_self'" class="nav-link">
-        <template v-if="item.img">
-          <v-img :src="item.img" max-width="40" max-height="40" class="nav-icon" />
-        </template>
-        <template v-else>
-          <span class="nav-text">{{ item.label }}</span>
-        </template>
+  <nav class="translucent-navbar">
+    <div class="nav-left">
+      <a href="#home-section" class="home-link">
+        <img src="@/assets/IMG/Button/JB_Btn.png" class="home-icon" alt="Home" />
       </a>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup>
-import LinkedIn from '../assets/IMG/Logos/LinkedIn_Icon.png'
-import GitHub from '../assets/IMG/Logos/GitHub_Icon.png'
-
-const navItems = [
-  { label: 'LinkedIn', to: 'https://www.linkedin.com/in/jakebria/', img: LinkedIn },
-  { label: 'GitHub', to: 'https://github.com/jakebria', img: GitHub },
-  { label: 'Graduation', to: '/graduation', img: null },
-]
 </script>
 
 <style scoped>
-.nav-link {
-  margin: 0 0.5rem;
+.translucent-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: transparent;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 1000;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.home-link {
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
 }
-.nav-text {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #333;
-  padding: 0.5rem 1rem;
-  background: rgba(255,255,255,0.8);
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  transition: background 0.2s;
+
+.home-link:hover {
+  transform: scale(1.1);
 }
-.nav-text:hover {
-  background: rgba(255,255,255,1);
+
+.home-icon {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .translucent-navbar {
+    padding: 0 1rem;
+    height: 60px;
+  }
 }
 </style>
