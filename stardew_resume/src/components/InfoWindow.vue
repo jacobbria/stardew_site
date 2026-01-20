@@ -4,7 +4,7 @@
           <img src="../assets/IMG/Button/Blank_Btn.png" alt="Blank Button" />
           <div class="content-text" v-if="content">{{ content }}</div>
           <button class="close-btn" @click="closeWindow">
-            <img src="../assets/IMG/Button/x_btn.png" alt="Close" />
+            <img src="../assets/IMG/Button/X_btn.png" alt="Close" />
           </button>
         </div>
     </div>
