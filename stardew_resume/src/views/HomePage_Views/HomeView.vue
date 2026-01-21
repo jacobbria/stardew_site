@@ -54,7 +54,7 @@ function scrollToSection(sectionId) {
         @click="downloadResume"
         aria-label="Download Resume"
       >
-       <a href="/api/GetResume">
+       <a href="/api/resume">
           <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
           <span class="btn-text">Resume</span>
        </a>
