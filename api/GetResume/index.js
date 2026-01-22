@@ -6,8 +6,8 @@ module.exports = async function (context, req) {
     try {
         // Read configuration from environment variables
         const connectionString = process.env.AZ_STR_CONN_STR;
-        const containerName = process.env.STORAGE_CONTAINER_NAME || 'resumes';
-        const blobName = process.env.RESUME_BLOB_NAME || 'Jake_Bria_Resume.pdf';
+        const containerName = process.env.STORAGE_CONTAINER_NAME;
+        const blobName = process.env.RESUME_BLOB_NAME;
 
         if (!connectionString) {
             throw new Error('AZURE_STORAGE_CONNECTION_STRING not configured');
