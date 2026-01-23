@@ -49,16 +49,6 @@ function scrollToSection(sectionId) {
         <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
         <span class="btn-text">{{ button.title }}</span>
       </button>
-      <button
-        class="education-btn-blank resume-btn"
-        @click="downloadResume"
-        aria-label="Download Resume"
-      >
-       <a href="/api/resume">
-          <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
-          <span class="btn-text">Resume</span>
-       </a>
-      </button>
     </nav>
   </main>
 </template>
