@@ -1,10 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, } from 'vue'
 import LandingView from '../../assets/Backgrounds/landing_pixel.gif'
-import InfoWindow from '@/components/InfoWindow.vue'
+import ContentModal from '@/components/ContentModal.vue'
 
-const fullTitle = 'Jake Bria'
-const displayedTitle = ref('')
+
 const navButtons = [
   { title: 'Projects', section: 'projects-section' },
   { title: 'Work', section: 'work-section' },
@@ -14,18 +13,6 @@ const navButtons = [
 
 const linksWindowOpen = ref(false)
 
-
-onMounted(() => {
-  let i = 0
-  function type() {
-    if (i <= fullTitle.length) {
-      displayedTitle.value = fullTitle.slice(0, i)
-      i++
-      setTimeout(type, 120)
-    }
-  }
-  type()
-})
 
 function scrollToSection(sectionId) {
   const element = document.getElementById(sectionId);
@@ -50,9 +37,6 @@ function handleNavClick(button) {
 
 <template>
   <main class="landing" :style="{ backgroundImage: `url(${LandingView})` }">
-    <div class="landing-title pixel-font">
-      <span>{{ displayedTitle }}</span><span class="type-cursor">|</span>
-    </div>
     <nav class="wooden__buttons" aria-label="Landing buttons">
       <button
         v-for="button in navButtons"
@@ -64,7 +48,7 @@ function handleNavClick(button) {
         <span class="btn-text">{{ button.title }}</span>
       </button>
     </nav>
-    <InfoWindow v-model:visible="linksWindowOpen">
+    <ContentModal v-model:visible="linksWindowOpen">
       <div class="link-list">
         <div>
           <a
@@ -85,7 +69,7 @@ function handleNavClick(button) {
           </a>
         </div>
       </div>
-    </InfoWindow>
+    </ContentModal>
   </main>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
-      <div class="Info_Window" v-if="visible">
-        <div class="window">
+      <div class="content-modal" v-if="visible">
+        <div class="modal-body">
           <img src="../assets/IMG/Button/Blank_Btn.png" alt="Blank Button" />
             <div class="content-text" v-if="content && !$slots.default">{{ content }}</div>
             <div class="content-slot" v-else-if="$slots.default">
@@ -23,7 +23,7 @@ defineProps({
   },
   content: {
     type: String,
-    default: '',
+    default: 'N/A',
   },
 });
 
@@ -34,7 +34,7 @@ function closeWindow() {
 </script>
 
 <style scoped>
-.Info_Window {
+.content-modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -45,7 +45,7 @@ function closeWindow() {
   justify-content: center;
   pointer-events: auto;
 }
-.Info_Window .window {
+.content-modal .modal-body {
   background: transparent;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.25);
@@ -54,7 +54,7 @@ function closeWindow() {
   justify-content: center;
   position: relative;
 }
-.Info_Window img {
+.content-modal img {
   width: 400px;
   max-width: 90vw;
   height: auto;

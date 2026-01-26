@@ -1,7 +1,7 @@
 <template>
   <div class="graduation-bg">
-    <InfoWindow
-      v-model:visible="showInfoWindow"
+    <ContentModal
+      v-model:visible="showContentModal"
       :content="selectedDegree"
     />
 
@@ -20,14 +20,14 @@
 
 <script setup>
 import { ref } from 'vue';
-import InfoWindow from '@/components/InfoWindow.vue';
+import ContentModal from '@/components/ContentModal.vue';
 
-const showInfoWindow = ref(false);
+const showContentModal = ref(false);
 const selectedDegree = ref('');
 
 function showEducation(degree) {
   selectedDegree.value = degree;
-  showInfoWindow.value = true;
+  showContentModal.value = true;
 }
 </script>
 

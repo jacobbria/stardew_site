@@ -1,5 +1,5 @@
 <template>
-  <nav class="translucent-navbar">
+  <nav class="translucent-nav_bar">
     <div class="nav-left">
       <a href="#home-section" class="home-link">
         <img src="@/assets/IMG/Button/Blank_Btn.png" class="home-icon" alt="Home" />
@@ -17,7 +17,7 @@
 </script>
 
 <style scoped>
-.translucent-navbar {
+.translucent-nav_bar {
   position: fixed;
   top: 0;
   left: 0;
@@ -43,10 +43,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.2s;
-}
-
-.home-link:hover {
-  transform: scale(1.05);
 }
 
 .home-icon {
@@ -77,10 +73,6 @@
   transition: transform 0.2s;
 }
 
-.resume-link:hover {
-  transform: scale(1.05);
-}
-
 .resume-icon {
   cursor: pointer;
   width: 70px;
@@ -100,7 +92,7 @@
 }
 
 @media (max-width: 768px) {
-  .translucent-navbar {
+  .translucent-nav_bar {
     padding: 0 1rem;
     height: 60px;
   }

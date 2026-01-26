@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <Navbar />
+    <Nav_Bar />
     <section id="home-section">
       <HomeView />
     </section>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import Navbar from '@/components/Navbar.vue';
+import Nav_Bar from '@/components/Nav_Bar.vue';
 import HomeView from './HomePage_Views/HomeView.vue';
 import GraduationView from './HomePage_Views/GraduationView.vue';
 import ProjectsPage from './HomePage_Views/ProjectsPage.vue';

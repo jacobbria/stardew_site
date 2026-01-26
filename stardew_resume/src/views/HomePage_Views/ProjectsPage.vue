@@ -2,10 +2,10 @@
   <div class="projects-page" id="projects">
 
     <div class="background"></div>
-    <InfoWindow
-     v-model:visible="showInfoWindow"
-     :content="selectedProject"
-     />
+    <ContentModal
+      v-model:visible="showContentModal"
+      :content="selectedProject"
+    />
 
 
     <div class="wooden_buttons_grad buttons-container">
@@ -23,9 +23,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import InfoWindow from '@/components/InfoWindow.vue';
+import ContentModal from '@/components/ContentModal.vue';
 
-const showInfoWindow = ref(false);
+const showContentModal = ref(false);
 const selectedProject = ref(null);
 
 const projects = [
@@ -37,7 +37,7 @@ const projects = [
 
 function showProject(project) {
   selectedProject.value = project.text;
-  showInfoWindow.value = true;
+  showContentModal.value = true;
 }
 
 </script>
