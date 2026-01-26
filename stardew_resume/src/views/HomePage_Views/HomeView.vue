@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import LandingView from '../../assets/Backgrounds/landing_pixel.gif'
+import InfoWindow from '@/components/InfoWindow.vue'
 
 const fullTitle = 'Jake Bria'
 const displayedTitle = ref('')
@@ -8,8 +9,10 @@ const navButtons = [
   { title: 'Projects', section: 'projects-section' },
   { title: 'Work', section: 'work-section' },
   { title: 'School', section: 'graduation-section' },
-  { title: 'Links', section: 'links-section' }
+  { title: 'Links', action: 'links' }
 ]
+
+const linksWindowOpen = ref(false)
 
 
 onMounted(() => {
@@ -31,6 +34,17 @@ function scrollToSection(sectionId) {
   }
 }
 
+function handleNavClick(button) {
+  if (button.action === 'links') {
+    linksWindowOpen.value = true
+    return
+  }
+
+  if (button.section) {
+    scrollToSection(button.section)
+  }
+}
+
 
 </script>
 
@@ -42,14 +56,36 @@ function scrollToSection(sectionId) {
     <nav class="wooden__buttons" aria-label="Landing buttons">
       <button
         v-for="button in navButtons"
-        :key="button.section"
+        :key="button.title"
         class="education-btn-blank"
-        @click="scrollToSection(button.section)"
+        @click="handleNavClick(button)"
       >
         <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
         <span class="btn-text">{{ button.title }}</span>
       </button>
     </nav>
+    <InfoWindow v-model:visible="linksWindowOpen">
+      <div class="link-list">
+        <div>
+          <a
+            href="https://github.com/jacobbria"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+        <div>
+          <a
+            href="https://www.linkedin.com/in/jacobbria/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </InfoWindow>
   </main>
 </template>
 
@@ -132,6 +168,12 @@ function scrollToSection(sectionId) {
   line-height: 1.6;
   pointer-events: none;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 @media (max-width: 768px) {

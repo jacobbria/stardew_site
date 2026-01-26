@@ -2,7 +2,10 @@
       <div class="Info_Window" v-if="visible">
         <div class="window">
           <img src="../assets/IMG/Button/Blank_Btn.png" alt="Blank Button" />
-          <div class="content-text" v-if="content">{{ content }}</div>
+            <div class="content-text" v-if="content && !$slots.default">{{ content }}</div>
+            <div class="content-slot" v-else-if="$slots.default">
+              <slot />
+            </div>
           <button class="close-btn" @click="closeWindow">
             <img src="../assets/IMG/Button/X_btn.png" alt="Close" />
           </button>
@@ -74,6 +77,31 @@ function closeWindow() {
   white-space: pre-line;
 }
 
+.content-slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  color: #000;
+  text-align: center;
+  padding: .4rem;
+  max-width: 95%;
+  line-height: 1.8;
+  pointer-events: auto;
+  white-space: pre-line;
+}
+
+:deep(.content-slot a) {
+  color: #0b4aa6;
+  text-decoration: underline;
+}
+
+:deep(.content-slot a:hover) {
+  color: #083a82;
+}
+
 .close-btn {
   position: absolute;
   top: 10px;
@@ -100,10 +128,19 @@ function closeWindow() {
     font-size: 1rem;
     line-height: 1.6;
   }
+  .content-slot {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
 }
 
 @media (max-width: 480px) {
   .content-text {
+    font-size: .7rem;
+    line-height: 1.4;
+    padding: 0.5rem;
+  }
+  .content-slot {
     font-size: .7rem;
     line-height: 1.4;
     padding: 0.5rem;
