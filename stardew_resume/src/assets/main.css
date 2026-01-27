@@ -1,7 +1,8 @@
+@import './theme.css';
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
 
 body, .pixel-font {
-  font-family: 'Pixelify Sans', 'Press Start 2P', monospace;
+  font-family: var(--font-primary);
 }
 
 
@@ -24,8 +25,6 @@ body, .pixel-font {
   white-space: normal;
   text-align: center;
   line-height: 1.6;
-  pointer-events: none;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .ButtonStyle_Standard {
