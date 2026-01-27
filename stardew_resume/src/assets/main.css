@@ -1,50 +1,52 @@
-@import './base.css';
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
+@import './theme.css';
 
+body, .pixel-font {
+  font-family: var(--font-primary);
+}
 
 #app {
   max-width: 1280px;
 }
 
-body, .pixel-font {
-  font-family: 'Pixelify Sans', monospace;
+/* Button Styling */
+.ButtonTextStyle_Standard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.6;
 }
 
+.ButtonStyle_Standard {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.2s;
+  position: relative;
+  display: inline-block;
+}
 
-@media (hover: hover) {
-  a:hover {
-    filter: brightness(1.2);
+@media (max-width: 768px) {
+  .ButtonTextStyle_Standard  {
+    font-size: 0.8rem;
   }
-
-
-
-
 }
 
-.wooden_imgBtn_Global img {
-  display: block;
-  width: clamp(80px, 8vw, 200px);
-  height: auto;
-}
-
-
-.wooden_imgBtn_Global {
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
-  transition: filter 180ms ease, transform 180ms ease;
-  will-change: filter, transform;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.28));
-}
-
-.wooden_imgBtn_Global:hover,
-.wooden_imgBtn_Global:focus {
-  filter: drop-shadow(0 14px 28px rgba(0,0,0,0.38));
-  transform: translateY(-3px);
+.ButtonStyle_Standard:hover {
+  transform: scale(1.05);
   filter: brightness(1.2)
 }
 
-.wooden__buttons {
+.ButtonSectionStyle_Standard {
   position: absolute;
   left: 50%;
   bottom: clamp(25px, 4vh, 36px);
@@ -60,10 +62,8 @@ body, .pixel-font {
   transition: filter 0.3s ease;
 }
 
-
-
 @media (max-width: 900px) {
-  .wooden__buttons {
+  .ButtonSectionStyle_Standard {
     justify-content: center;
     gap: clamp(10px, 4vw, 20px);
     flex-wrap: wrap;
@@ -73,87 +73,16 @@ body, .pixel-font {
 }
 
 @media (max-width: 420px) {
-  .wooden__buttons {
+  .ButtonSectionStyle_Standard {
     flex-direction: column;
   }
 
 }
 
 @media (max-width: 320px) {
-  .wooden__buttons {
+  .ButtonSectionStyle_Standard {
     bottom: 70px;
   }
 }
 
-.btn-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1.2rem;
-  color: #000;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  white-space: normal;
-  text-align: center;
-  line-height: 1.6;
-  pointer-events: none;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-}
 
-.btn-bg {
-  display: block;
-  width: auto;
-  height: auto;
-}
-
-.buttons-container {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  z-index: 2;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 2rem;
-  padding-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-  .buttons-container {
-    position: relative;
-    flex-direction: column;
-    width: 100vw;
-    left: 0;
-    bottom: 0;
-    padding: 8rem 0;
-    align-items: center;
-    justify-content: center;
-  }
-  .btn-text {
-    font-size: 0.8rem;
-  }
-}
-
-.wooden-btn-shared {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  transition: transform 0.2s;
-  position: relative;
-}
-
-.wooden-btn-shared:hover {
-  transform: scale(1.05);
-}
-
-.wooden-btn-shared img {
-  width: 160px;
-  height: auto;
-  display: block;
-}
