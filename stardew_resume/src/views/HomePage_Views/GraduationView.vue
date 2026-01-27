@@ -6,13 +6,13 @@
     />
 
     <div class="wooden_buttons_grad">
-      <button class="wooden-btn-shared education-btn-blank" @click="showEducation('AAS Software Dev.\nSinclair College\n2024')">
+      <button class="ButtonStyle_Standard" @click="showEducation('AAS Software Dev.\nSinclair College\n2024')">
         <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
-        <span class="btn-text">Assoc.<br>Degree</span>
+        <span class="ButtonTextStyle_Standard">Assoc.<br>Degree</span>
       </button>
-      <button class="wooden-btn-shared education-btn-blank" @click="showEducation('BS Info Tech.\nFranklin U.\n2025')">
+      <button class="ButtonStyle_Standard" @click="showEducation('BS Info Tech.\nFranklin U.\n2025')">
         <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
-        <span class="btn-text">Bach.<br>Degree</span>
+        <span class="ButtonTextStyle_Standard">Bach.<br>Degree</span>
       </button>
     </div>
   </div>

@@ -11,6 +11,11 @@ const navButtons = [
   { title: 'Links', action: 'links' }
 ]
 
+const links = [
+  { label: 'GitHub', href: 'https://github.com/jacobbria' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jacobbria/' }
+]
+
 const linksWindowOpen = ref(false)
 
 
@@ -37,35 +42,26 @@ function handleNavClick(button) {
 
 <template>
   <main class="landing" :style="{ backgroundImage: `url(${LandingView})` }">
-    <nav class="wooden__buttons" aria-label="Landing buttons">
+    <nav class="ButtonSectionStyle_Standard" aria-label="Landing buttons">
       <button
         v-for="button in navButtons"
         :key="button.title"
-        class="education-btn-blank"
+        class="ButtonStyle_Standard"
         @click="handleNavClick(button)"
       >
-        <img src="@/assets/IMG/Button/Blank_Btn.png" alt="" class="btn-bg" />
-        <span class="btn-text">{{ button.title }}</span>
+        <img src="@/assets/IMG/Button/Blank_Btn.png" alt="Button"/>
+        <span class="ButtonTextStyle_Standard">{{ button.title }}</span>
       </button>
     </nav>
     <ContentModal v-model:visible="linksWindowOpen">
       <div class="link-list">
-        <div>
+        <div v-for="link in links" :key="link.href">
           <a
-            href="https://github.com/jacobbria"
+            :href="link.href"
             target="_blank"
             rel="noopener noreferrer"
           >
-            GitHub
-          </a>
-        </div>
-        <div>
-          <a
-            href="https://www.linkedin.com/in/jacobbria/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
+            {{ link.label }}
           </a>
         </div>
       </div>
@@ -111,48 +107,6 @@ function handleNavClick(button) {
   animation: blink 1s steps(1) infinite;
   color: #f4ffff;
 }
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-.education-btn-blank {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  transition: transform 0.2s;
-  position: relative;
-  display: inline-block;
-}
-
-.education-btn-blank:hover {
-  transform: scale(1.05);
-}
-
-.btn-bg {
-  display: block;
-  width: auto;
-  height: auto;
-}
-
-.btn-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1.2rem;
-  color: #000;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  white-space: normal;
-  text-align: center;
-  line-height: 1.6;
-  pointer-events: none;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-}
 
 .link-list {
   display: flex;
@@ -160,10 +114,5 @@ function handleNavClick(button) {
   gap: 0.6rem;
 }
 
-@media (max-width: 768px) {
-  .btn-text {
-    font-size: 0.8rem;
-  }
-}
 
 </style>

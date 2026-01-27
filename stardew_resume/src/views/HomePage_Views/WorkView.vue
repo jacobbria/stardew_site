@@ -7,15 +7,14 @@
       :content="selectedWork"
     />
 
-
-    <div class="wooden_buttons_grad buttons-container">
+    <div class="ButtonSectionStyle_Standard">
       <button
         v-for="work in workExperiences"
         :key="work.id"
-        class="wooden_imgBtn_Global wooden-btn-shared"
+        class="ButtonStyle_Standard"
         @click="showWork(work)">
         <img src="@/assets/IMG/Button/Blank_Btn.png" :alt="work.name" class="btn-bg" />
-        <span class="btn-text">{{ work.name }}</span>
+        <span class="ButtonTextStyle_Standard">{{ work.name }}</span>
       </button>
     </div>
   </div>
@@ -41,7 +40,7 @@ function showWork(work) {
 
 </script>
 
-  <style scoped>
+<style scoped>
 .work-page {
   position: relative;
   width: 100vw;
@@ -57,8 +56,4 @@ function showWork(work) {
   background: url('@/assets/Backgrounds/office_gif.gif') center center/cover no-repeat;
   z-index: 1;
 }
-
-
-
-
 </style>
