@@ -48,7 +48,6 @@ function closeWindow() {
 .content-modal .modal-body {
   background: transparent;
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +67,7 @@ function closeWindow() {
   transform: translate(-50%, -50%);
   font-family: 'Press Start 2P', cursive;
   font-size: 0.8rem;
-  color: #000;
+  color: var(--text-primary);
   text-align: center;
   padding: .4rem;
   max-width: 95%;
@@ -84,22 +83,13 @@ function closeWindow() {
   transform: translate(-50%, -50%);
   font-family: 'Press Start 2P', cursive;
   font-size: 0.8rem;
-  color: #000;
+  color: var(--text-primary);
   text-align: center;
   padding: .4rem;
   max-width: 95%;
   line-height: 1.8;
   pointer-events: auto;
   white-space: pre-line;
-}
-
-:deep(.content-slot a) {
-  color: #0b4aa6;
-  text-decoration: underline;
-}
-
-:deep(.content-slot a:hover) {
-  color: #083a82;
 }
 
 .close-btn {
@@ -115,13 +105,10 @@ function closeWindow() {
   justify-content: center;
   z-index: 1003;
 }
-
 .close-btn img {
   width: 30px;
   height: 30px;
 }
-
-
 
 @media (max-width: 768px) {
   .content-text {
