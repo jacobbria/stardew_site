@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav_bar">
+  <nav class="translucent-nav_bar">
     <div class="nav-left">
       <a href="#home-section" class="nav-button">
         <img src="@/assets/IMG/Button/Blank_Btn.png" class="nav-icon" alt="Home" />
@@ -14,10 +14,11 @@
 </template>
 
 <script setup>
+
 </script>
 
 <style scoped>
-.nav_bar {
+.translucent-nav_bar {
   position: fixed;
   top: 0;
   left: 0;
@@ -34,7 +35,8 @@
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;}
+  gap: 1.5rem;
+}
 
 .nav-button {
   position: relative;
@@ -64,6 +66,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  pointer-events: none;
 }
 
 .nav-text--small {
@@ -71,7 +74,7 @@
 }
 
 @media (max-width: 768px) {
-  .nav_bar {
+  .translucent-nav_bar {
     padding: 0 1rem;
     height: 60px;
   }
