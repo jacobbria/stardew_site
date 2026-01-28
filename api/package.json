@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@azure/storage-blob": "*"
+    "@azure/storage-blob": "*",
+    "@google/generative-ai": "*"
   },
   "devDependencies": {},
   "engines": {

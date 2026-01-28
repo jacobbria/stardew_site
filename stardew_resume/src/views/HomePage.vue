@@ -13,7 +13,8 @@
     <section id="work-section">
       <WorkView />
     </section>
-    <!-- Add more sections/components here as needed -->
+    <!-- Chatbot component fixed on screen -->
+    <ChatBot />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import HomeView from './HomePage_Views/HomeView.vue';
 import GraduationView from './HomePage_Views/GraduationView.vue';
 import ProjectsPage from './HomePage_Views/ProjectsPage.vue';
 import WorkView from './HomePage_Views/WorkView.vue';
+import ChatBot from '@/components/ChatBot.vue';
 </script>
 
 <style scoped>
