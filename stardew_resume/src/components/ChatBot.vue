@@ -94,7 +94,7 @@ async function testApi() {
   console.log('Testing API...');
   try {
     console.log('In try block of testApi');
-    const response = await fetch('/api/chatbot', {
+    const response = await fetch('/api/ChatBot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
