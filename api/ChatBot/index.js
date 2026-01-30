@@ -1,81 +1,50 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-
 module.exports = async function (context, req) {
-    context.log('ChatBot function triggered');
+    context.log('ChatBot test function triggered');
     
     try {
-        // Get Gemini API key
+        // Test 1: Check if API key is available
         const apiKey = process.env.GEMINI_API_KEY;
-        context.log('API Key configured:', !!apiKey);
+        const hasApiKey = !!apiKey;
         
-        if (!apiKey) {
-            context.log('ERROR: No API key found');
-            return {
+    context.log('API Key present:', hasApiKey);
+        
+        if (!hasApiKey) {
+            context.log('NO API KEY FOUND');
+            context.res = {
+            context.res = {
                 status: 400,
-                body: JSON.stringify({ error: 'GEMINI_API_KEY not configured' })
+                headers: { 'Content-Type': 'application/json' },
+                body: { 
+                    success: false,
+                    message: 'GEMINI_API_KEY environment variable not found',
+                    hasApiKey: false
+                }
             };
+            return;
         }
-
-        // Extract message and resume from request body
-        const { message, resume } = req.body;
-        context.log('Message length:', message?.length);
-        context.log('Resume length:', resume?.length);
-
-        if (!message) {
-            context.log('ERROR: Message is missing');
-            return {
-                status: 400,
-                body: JSON.stringify({ error: 'Message is required' })
-            };
-        }
-
-        if (!resume) {
-            context.log('ERROR: Resume is missing');
-            return {
-                status: 400,
-                body: JSON.stringify({ error: 'Resume content is required' })
-            };
-        }
-
-        // Initialize Gemini API client
-        context.log('Initializing Gemini client...');
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-        // System prompt with resume context
-        const systemPrompt = `You are a helpful assistant answering questions about Jake Bria's resume. 
-You have been given the full resume content below. Answer questions ONLY based on the information in this resume.
-If a question cannot be answered from the resume, politely explain that the information is not available in the resume provided.
-Be concise and professional in your responses.
-
-RESUME CONTENT:
-${resume}`;
-
-        // Call Gemini API with the system prompt and user message
-        context.log('Calling Gemini API...');
-        const result = await model.generateContent([
-            systemPrompt,
-            `\n\nUser question: ${message}`
-        ]);
-
-        context.log('Got response from Gemini');
-        const response = await result.response;
-        const responseText = response.text();
-        context.log('Response text length:', responseText.length);
-
-        return {
+        
+        context.log('API KEY FOUND - length:', apiKey.length);
+        
+        context.res = {
             status: 200,
-            body: JSON.stringify({ 
-                response: responseText
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: { 
+                success: true,
+                message: 'API key found successfully',
+                hasApiKey: true,
+                keyLength: apiKey.length
+            }
         };
-
+        
     } catch (error) {
-        context.log('ERROR:', error.message);
-        context.log('Stack:', error.stack);
-        return {
+        context.log('Runtime ERROR:', error.message);
+        context.res = {
             status: 500,
-            body: JSON.stringify({ error: 'Failed to process message: ' + error.message })
+            headers: { 'Content-Type': 'application/json' },
+            body: { 
+                success: false,
+                message: 'Error: ' + error.message
+            }
         };
     }
 };

@@ -1,53 +1,120 @@
 <template>
-  <!-- Chatbot container with floating button -->
   <div class="chatbot-container">
-    <!-- Floating chat button -->
-    <button class="chatbot-circle" @click="isChatOpen = true" title="Chat about my resume">
-      💬
+    <button class="chatbot-circle" @click="testApi" title="Test Chatbot API">
+      🧪
     </button>
 
-    <!-- Chat Modal -->
-    <div v-if="isChatOpen" class="chatbot-modal">
-      <div class="modal-body">
-        <!-- Header -->
-        <div class="modal-header">
-          <h3>Resume Chat</h3>
-          <button class="close-btn" @click="isChatOpen = false">✕</button>
-        </div>
-
-        <!-- Messages area -->
-        <div class="messages-area" ref="messagesContainer">
-          <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.role]">
-            <span class="message-text">{{ msg.text }}</span>
-          </div>
-          <div v-if="isLoading" class="message-loading">
-            <span>Thinking...</span>
-          </div>
-        </div>
-
-        <!-- Input area -->
-        <div class="input-area">
-          <input
-            v-model="userInput"
-            type="text"
-            placeholder="Ask about my resume..."
-            @keyup.enter="sendMessage"
-            :disabled="isLoading"
-            class="chat-input"
-          />
-          <button @click="sendMessage" :disabled="isLoading || !userInput.trim()" class="send-btn">
-            Send
-          </button>
-        </div>
-      </div>
+    <div v-if="testResult" class="test-result">
+      <h3>API Test Result</h3>
+      <p><strong>Status:</strong> {{ testResult.success ? '✅ SUCCESS' : '❌ FAILED' }}</p>
+      <p><strong>Message:</strong> {{ testResult.message }}</p>
+      <p v-if="testResult.hasApiKey"><strong>API Key Present:</strong> Yes ({{ testResult.keyLength }} chars)</p>
+      <p v-else><strong>API Key Present:</strong> No</p>
+      <button @click="testResult = null">Clear</button>
     </div>
-
-    <!-- Overlay backdrop -->
-    <div v-if="isChatOpen" class="modal-overlay" @click="isChatOpen = false"></div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const testResult = ref(null);
+
+async function testApi() {
+  console.log('Testing API...');
+  try {
+    const response = await fetch('/api/ChatBot', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        test: true
+      })
+    });
+
+    console.log('Response status:', response.status);
+    const data = await response.json();
+    console.log('Response data:', data);
+
+    testResult.value = data;
+  } catch (error) {
+    console.error('Test error:', error);
+    testResult.value = {
+      success: false,
+      message: 'Network error: ' + error.message
+    };
+  }
+}
+</script>
+
+<style scoped>
+.chatbot-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+}
+
+.chatbot-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+.chatbot-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.test-result {
+  position: fixed;
+  bottom: 100px;
+  right: 2rem;
+  width: 350px;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.test-result h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.test-result p {
+  margin: 0.8rem 0;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.test-result button {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.test-result button:hover {
+  background: #764ba2;
+}
+</style>
 import { ref, nextTick } from 'vue';
 
 const isChatOpen = ref(false);
