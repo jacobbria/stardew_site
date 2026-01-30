@@ -1,18 +1,20 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 module.exports = async function (context, req) {
-    context.log('ChatBot function triggered');
-
     try {
-        // Get API key from environment variables
-        const apiKey = process.env.GEM_API_KEY;
+        // Get Gemini API key - hardcode it here or set as environment variable
+        const apiKey = process.env.GEMINI_API_KEY;
         
         if (!apiKey) {
-            throw new Error('GEM_API_KEY environment variable not configured');
+            return {
+                status: 400,
+                body: { error: 'GEMINI_API_KEY not configured. Please set the environment variable.' },
+                headers: { 'Content-Type': 'application/json' }
+            };
         }
 
-        // Extract request body
-        const { message, resume, conversationHistory } = req.body;
+        // Extract message and resume from request body
+        const { message, resume } = req.body;
 
         if (!message) {
             return {
@@ -30,57 +32,32 @@ module.exports = async function (context, req) {
             };
         }
 
-        // Initialize Generative AI client
+        // Initialize Gemini API client
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        // Build conversation history with resume context
+        // System prompt with resume context
         const systemPrompt = `You are a helpful assistant answering questions about Jake Bria's resume. 
 You have been given the full resume content below. Answer questions ONLY based on the information in this resume.
 If a question cannot be answered from the resume, politely explain that the information is not available in the resume provided.
+Be concise and professional in your responses.
 
 RESUME CONTENT:
-${resume}
+${resume}`;
 
-Always be professional and concise in your responses.`;
+        // Call Gemini API with the system prompt and user message
+        const result = await model.generateContent([
+            systemPrompt,
+            `\n\nUser question: ${message}`
+        ]);
 
-        // Prepare messages for the API
-        const messages = [
-            {
-                role: 'user',
-                parts: [{ text: systemPrompt }]
-            },
-            {
-                role: 'model',
-                parts: [{ text: 'I understand. I will answer questions only based on the resume provided. Go ahead with your questions.' }]
-            }
-        ];
+        const response = await result.response;
+        const responseText = response.text();
 
-        // Add conversation history if available
-        if (conversationHistory && Array.isArray(conversationHistory)) {
-            messages.push(...conversationHistory);
-        }
-
-        // Add current user message
-        messages.push({
-            role: 'user',
-            parts: [{ text: message }]
-        });
-
-        // Call Gemini API with full conversation context
-        const result = await model.generateContent({
-            contents: messages
-        });
-
-        const responseText = result.response.text();
-
-        context.res = {
+        return {
             status: 200,
             body: { 
-                response: responseText,
-                conversationHistory: [
-                    ...messages.filter(m => m.role === 'user' || m.role === 'model')
-                ]
+                response: responseText
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -88,8 +65,8 @@ Always be professional and concise in your responses.`;
         };
 
     } catch (error) {
-        context.log.error('Error in ChatBot function:', error);
-        context.res = {
+        console.error('ChatBot Function Error:', error);
+        return {
             status: 500,
             body: { error: 'Failed to process message: ' + error.message },
             headers: {

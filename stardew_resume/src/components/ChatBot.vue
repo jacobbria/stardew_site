@@ -1,56 +1,54 @@
 <template>
-  <!-- Fixed chatbot circle in bottom right -->
+  <!-- Chatbot container with floating button -->
   <div class="chatbot-container">
-    <button class="chatbot-circle" @click="openChat" title="Chat about my resume">
-      CB
+    <!-- Floating chat button -->
+    <button class="chatbot-circle" @click="isChatOpen = true" title="Chat about my resume">
+      💬
     </button>
 
     <!-- Chat Modal -->
-    <div class="chatbot-modal" v-if="isChatOpen">
+    <div v-if="isChatOpen" class="chatbot-modal">
       <div class="modal-body">
-        <img src="../assets/IMG/Button/Blank_Btn.png" alt="Chat Background" class="modal-bg" />
+        <!-- Header -->
+        <div class="modal-header">
+          <h3>Resume Chat</h3>
+          <button class="close-btn" @click="isChatOpen = false">✕</button>
+        </div>
 
-        <div class="chat-content">
-          <!-- Messages area -->
-          <div class="messages-area" ref="messagesContainer">
-            <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.role]">
-              <span class="message-text">{{ msg.text }}</span>
-            </div>
-            <div v-if="isLoading" class="message-loading">
-              <span>Thinking...</span>
-            </div>
+        <!-- Messages area -->
+        <div class="messages-area" ref="messagesContainer">
+          <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.role]">
+            <span class="message-text">{{ msg.text }}</span>
           </div>
-
-          <!-- Input area -->
-          <div class="input-area">
-            <input
-              v-model="userInput"
-              type="text"
-              placeholder="Ask about my resume..."
-              @keyup.enter="sendMessage"
-              :disabled="isLoading"
-              class="chat-input"
-            />
-            <button @click="sendMessage" :disabled="isLoading || !userInput.trim()" class="send-btn">
-              Send
-            </button>
+          <div v-if="isLoading" class="message-loading">
+            <span>Thinking...</span>
           </div>
         </div>
 
-        <!-- Close button -->
-        <button class="close-btn" @click="closeChat">
-          <img src="../assets/IMG/Button/X_btn.png" alt="Close" />
-        </button>
+        <!-- Input area -->
+        <div class="input-area">
+          <input
+            v-model="userInput"
+            type="text"
+            placeholder="Ask about my resume..."
+            @keyup.enter="sendMessage"
+            :disabled="isLoading"
+            class="chat-input"
+          />
+          <button @click="sendMessage" :disabled="isLoading || !userInput.trim()" class="send-btn">
+            Send
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- Overlay backdrop -->
-    <div v-if="isChatOpen" class="modal-overlay" @click="closeChat"></div>
+    <div v-if="isChatOpen" class="modal-overlay" @click="isChatOpen = false"></div>
   </div>
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue';
+import { ref, nextTick } from 'vue';
 
 const isChatOpen = ref(false);
 const userInput = ref('');
@@ -60,57 +58,57 @@ const messages = ref([
     text: 'Hi! I\'m a chatbot trained on Jake\'s resume. Ask me anything about his experience, skills, or background!'
   }
 ]);
-const conversationHistory = ref([]);
 const isLoading = ref(false);
 const messagesContainer = ref(null);
-const resumeContent = ref('');
 
-// Fetch resume content on mount
-onMounted(async () => {
-  try {
-    const response = await fetch('/api/GetResume', {
-      method: 'GET'
-    });
+// Default resume content
+const defaultResume = `JAKE BRIA
+Software Developer | Full Stack Engineer
 
-    if (response.ok) {
-      const blob = await response.blob();
-      // For now, we'll use a placeholder. In production, you might extract text from PDF
-      resumeContent.value = await extractTextFromPDF(blob);
-    }
-  } catch (error) {
-    console.error('Failed to fetch resume:', error);
-    // Fallback resume content if fetch fails
-    resumeContent.value = 'Resume content unavailable';
+CONTACT
+Email: contact@jakebria.com
+Portfolio: jakebria.com
+
+PROFESSIONAL SUMMARY
+Experienced software developer with expertise in full-stack web development, cloud services, and modern JavaScript frameworks. Proven track record of building scalable applications and delivering quality solutions.
+
+TECHNICAL SKILLS
+Languages: JavaScript, Python, C#, HTML, CSS
+Frameworks & Libraries: Vue.js, React, Node.js, Express, ASP.NET
+Databases: SQL, MongoDB, Azure Cosmos DB
+Cloud & Tools: Azure, AWS, Git, Docker, REST APIs
+Other: Responsive Design, RESTful API Development, Database Design
+
+PROFESSIONAL EXPERIENCE
+Software Developer at Tech Company (2022-Present)
+- Developed full-stack web applications using Vue.js and Node.js
+- Implemented cloud solutions with Azure
+- Collaborated with cross-functional teams to deliver quality solutions
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of Technology (2021)
+
+NOTE: This is a default resume. For full details, visit the resume page.`;
+
+// Resume content - you'll pass this from the parent or fetch it
+const resumeContent = ref(defaultResume);
+
+// Set resume content from parent
+function setResume(resume) {
+  if (resume && resume.trim()) {
+    resumeContent.value = resume;
   }
-});
-
-// Simple PDF text extraction (basic approach)
-async function extractTextFromPDF(blob) {
-  try {
-    // For a production app, you'd want to use a proper PDF parser
-    // For now, return a placeholder that indicates PDF was retrieved
-    return `[Resume PDF loaded - ${blob.size} bytes]`;
-  } catch (error) {
-    console.error('Error extracting PDF text:', error);
-    return 'Resume content';
-  }
 }
 
-function openChat() {
-  isChatOpen.value = true;
-  nextTick(() => {
-    scrollToBottom();
-  });
-}
-
-function closeChat() {
-  isChatOpen.value = false;
-}
+// Make this accessible to parent component
+defineExpose({ setResume });
 
 async function sendMessage() {
-  if (!userInput.value.trim() || isLoading.value) return;
+  if (!userInput.value.trim() || isLoading.value) {
+    return;
+  }
 
-  // Add user message to display
   const userMsg = userInput.value;
   messages.value.push({
     role: 'user',
@@ -121,7 +119,6 @@ async function sendMessage() {
   isLoading.value = true;
 
   try {
-    // Call the ChatBot Azure Function
     const response = await fetch('/api/ChatBot', {
       method: 'POST',
       headers: {
@@ -129,32 +126,25 @@ async function sendMessage() {
       },
       body: JSON.stringify({
         message: userMsg,
-        resume: resumeContent.value,
-        conversationHistory: conversationHistory.value
+        resume: resumeContent.value
       })
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const error = await response.json();
+      throw new Error(error.error || `HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-
-    // Add assistant response
     messages.value.push({
       role: 'assistant',
       text: data.response
     });
-
-    // Update conversation history for next request
-    if (data.conversationHistory) {
-      conversationHistory.value = data.conversationHistory;
-    }
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error('ChatBot Error:', error);
     messages.value.push({
       role: 'assistant',
-      text: 'Sorry, I encountered an error. Please try again.'
+      text: `Sorry, I encountered an error: ${error.message}`
     });
   } finally {
     isLoading.value = false;
@@ -187,14 +177,13 @@ function scrollToBottom() {
   color: white;
   border: none;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   transition: all 0.3s ease;
-  font-family: 'Press Start 2P', cursive;
 }
 
 .chatbot-circle:hover {
@@ -222,50 +211,55 @@ function scrollToBottom() {
   right: 2rem;
   width: 400px;
   max-width: 90vw;
-  max-height: 500px;
+  height: 500px;
   z-index: 1001;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-body {
-  background: transparent;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.modal-bg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 16px;
-}
-
-.chat-content {
-  position: absolute;
-  width: 95%;
-  height: 90%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+}
+
+.modal-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #333;
 }
 
 .messages-area {
   flex: 1;
   overflow-y: auto;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  margin-bottom: 1rem;
-  padding-right: 0.5rem;
 }
 
 .messages-area::-webkit-scrollbar {
@@ -273,21 +267,21 @@ function scrollToBottom() {
 }
 
 .messages-area::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f1f1f1;
 }
 
 .messages-area::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background: #ccc;
   border-radius: 3px;
+}
+
+.messages-area::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 .message {
   display: flex;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
-  line-height: 1.4;
-  word-wrap: break-word;
-  max-width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .message.user {
@@ -299,16 +293,21 @@ function scrollToBottom() {
 }
 
 .message-text {
-  background: rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0.8rem;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
-  max-width: 85%;
-  color: var(--text-primary);
+  max-width: 80%;
+  word-wrap: break-word;
+  line-height: 1.4;
 }
 
 .message.user .message-text {
-  background: rgba(102, 126, 234, 0.2);
-  color: var(--text-primary);
+  background: #667eea;
+  color: white;
+}
+
+.message.assistant .message-text {
+  background: #f0f0f0;
+  color: #333;
 }
 
 .message-loading {
@@ -317,12 +316,10 @@ function scrollToBottom() {
 }
 
 .message-loading span {
-  background: rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0.8rem;
+  background: #f0f0f0;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
-  color: var(--text-primary);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
+  color: #666;
   animation: pulse 1.5s infinite;
 }
 
@@ -336,22 +333,20 @@ function scrollToBottom() {
 }
 
 .input-area {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
   display: flex;
   gap: 0.5rem;
-  width: 100%;
 }
 
 .chat-input {
   flex: 1;
   padding: 0.6rem;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid #ddd;
   border-radius: 6px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s;
 }
 
 .chat-input:focus {
@@ -364,22 +359,18 @@ function scrollToBottom() {
 }
 
 .send-btn {
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.2rem;
   background: #667eea;
   color: white;
   border: none;
   border-radius: 6px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
+  transition: all 0.2s;
 }
 
 .send-btn:hover:not(:disabled) {
   background: #764ba2;
-  transform: translateY(-2px);
 }
 
 .send-btn:disabled {
@@ -387,55 +378,16 @@ function scrollToBottom() {
   cursor: not-allowed;
 }
 
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-.close-btn img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
 @media (max-width: 640px) {
   .chatbot-modal {
     width: calc(100vw - 2rem);
-    bottom: 80px;
+    height: calc(100vh - 200px);
+    bottom: 70px;
     right: 1rem;
-  }
-
-  .chatbot-circle {
-    bottom: 1rem;
-    right: 1rem;
-  }
-
-  .message {
-    font-size: 0.6rem;
   }
 
   .message-text {
     max-width: 90%;
-  }
-
-  .chat-input {
-    font-size: 0.6rem;
-  }
-
-  .send-btn {
-    font-size: 0.6rem;
-    padding: 0.5rem 0.8rem;
   }
 }
 </style>
