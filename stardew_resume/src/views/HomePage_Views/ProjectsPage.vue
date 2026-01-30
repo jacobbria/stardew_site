@@ -2,20 +2,20 @@
   <div class="projects-page" id="projects">
 
     <div class="background"></div>
-    <InfoWindow
-     v-model:visible="showInfoWindow"
-     :content="selectedProject"
-     />
+    <ContentModal
+      v-model:visible="showContentModal"
+      :content="selectedProject"
+    />
 
 
-    <div class="wooden_buttons_grad buttons-container">
+    <div class="ButtonSectionStyle_Standard">
       <button
         v-for="project in projects"
         :key="project.id"
-        class="wooden_imgBtn_Global wooden-btn-shared"
+        class="ButtonStyle_Standard"
         @click="showProject(project)">
         <img src="@/assets/IMG/Button/Blank_Btn.png" :alt="project.name" class="btn-bg" />
-        <span class="btn-text">{{ project.name }}</span>
+        <span class="ButtonTextStyle_Standard">{{ project.name }}</span>
       </button>
     </div>
   </div>
@@ -23,9 +23,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import InfoWindow from '@/components/InfoWindow.vue';
+import ContentModal from '@/components/ContentModal.vue';
 
-const showInfoWindow = ref(false);
+const showContentModal = ref(false);
 const selectedProject = ref(null);
 
 const projects = [
@@ -37,7 +37,7 @@ const projects = [
 
 function showProject(project) {
   selectedProject.value = project.text;
-  showInfoWindow.value = true;
+  showContentModal.value = true;
 }
 
 </script>

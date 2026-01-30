@@ -2,20 +2,19 @@
   <div class="work-page" id="work">
 
     <div class="background"></div>
-    <InfoWindow
-     v-model:visible="showInfoWindow"
-     :content="selectedWork"
-     />
+    <ContentModal
+      v-model:visible="showContentModal"
+      :content="selectedWork"
+    />
 
-
-    <div class="wooden_buttons_grad buttons-container">
+    <div class="ButtonSectionStyle_Standard">
       <button
         v-for="work in workExperiences"
         :key="work.id"
-        class="wooden_imgBtn_Global wooden-btn-shared"
+        class="ButtonStyle_Standard"
         @click="showWork(work)">
         <img src="@/assets/IMG/Button/Blank_Btn.png" :alt="work.name" class="btn-bg" />
-        <span class="btn-text">{{ work.name }}</span>
+        <span class="ButtonTextStyle_Standard">{{ work.name }}</span>
       </button>
     </div>
   </div>
@@ -23,9 +22,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import InfoWindow from '@/components/InfoWindow.vue';
+import ContentModal from '@/components/ContentModal.vue';
 
-const showInfoWindow = ref(false);
+const showContentModal = ref(false);
 const selectedWork = ref(null);
 
 const workExperiences = [
@@ -36,12 +35,12 @@ const workExperiences = [
 
 function showWork(work) {
   selectedWork.value = work.description;
-  showInfoWindow.value = true;
+  showContentModal.value = true;
 }
 
 </script>
 
-  <style scoped>
+<style scoped>
 .work-page {
   position: relative;
   width: 100vw;
@@ -57,8 +56,4 @@ function showWork(work) {
   background: url('@/assets/Backgrounds/office_gif.gif') center center/cover no-repeat;
   z-index: 1;
 }
-
-
-
-
 </style>
