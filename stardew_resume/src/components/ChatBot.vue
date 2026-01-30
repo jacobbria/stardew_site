@@ -94,7 +94,7 @@ async function testApi() {
   console.log('Testing API...');
   try {
     console.log('In try block of testApi');
-    const response = await fetch('/api/ChatBot', {
+    const response = await fetch('/api/chatbot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -105,7 +105,17 @@ async function testApi() {
     });
 
     console.log('Response status:', response.status);
-    const data = await response.json();
+
+    // Read response as text first to see what we're getting
+    const responseText = await response.text();
+    console.log('Response text:', responseText);
+
+    // Only try to parse as JSON if there's content
+    if (!responseText) {
+      throw new Error('Empty response from server');
+    }
+
+    const data = JSON.parse(responseText);
     console.log('Response data:', data);
 
     testResult.value = data;
@@ -113,7 +123,7 @@ async function testApi() {
     console.error('Test error:', error);
     testResult.value = {
       success: false,
-      message: 'Network error: ' + error.message
+      message: 'Error: ' + error.message
     };
   }
 }
