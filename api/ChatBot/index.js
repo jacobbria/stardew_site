@@ -3,7 +3,7 @@ module.exports = async function (context, req) {
     
     try {
         // Test 1: Check if API key is available
-        const apiKey = process.env.GEMINI_API_KEY;
+        const apiKey = process.env.GEM_API_KEY;
         const hasApiKey = !!apiKey;
         
     context.log('API Key present:', hasApiKey);
