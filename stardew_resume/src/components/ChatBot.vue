@@ -93,6 +93,7 @@ const testResult = ref(null);
 async function testApi() {
   console.log('Testing API...');
   try {
+    console.log('In try block of testApi');
     const response = await fetch('/api/chatbot', {
       method: 'POST',
       headers: {
