@@ -2,6 +2,7 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 
 module.exports = async function (context, req) {
     context.log('GetResume function triggered');
+    console.log('GetResume function triggered');
 
     try {
         // Read configuration from environment variables (supports primary + fallback names)
