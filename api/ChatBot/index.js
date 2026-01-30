@@ -3,7 +3,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 module.exports = async function (context, req) {
     try {
         // Get Gemini API key - hardcode it here or set as environment variable
-        const apiKey = process.env.GEMINI_API_KEY;
+        const apiKey = process.env.GEM_API_KEY;
         
         if (!apiKey) {
             return {

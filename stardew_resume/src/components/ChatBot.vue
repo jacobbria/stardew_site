@@ -130,12 +130,20 @@ async function sendMessage() {
       })
     });
 
+    console.log('ChatBot API Response Status:', response.status);
+    const responseText = await response.text();
+    console.log('ChatBot API Response Text:', responseText);
+
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || `HTTP error! status: ${response.status}`);
+      try {
+        const error = JSON.parse(responseText);
+        throw new Error(error.error || `HTTP error! status: ${response.status}`);
+      } catch (e) {
+        throw new Error(`HTTP error! status: ${response.status} - ${responseText}`);
+      }
     }
 
-    const data = await response.json();
+    const data = JSON.parse(responseText);
     messages.value.push({
       role: 'assistant',
       text: data.response
