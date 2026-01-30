@@ -6,6 +6,7 @@ module.exports = async function (context, req) {
         const apiKey = process.env.GEM_API_KEY;
         const hasApiKey = !!apiKey;
         
+        
     context.log('API Key present:', hasApiKey);
         
         if (!hasApiKey) {
