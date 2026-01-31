@@ -24,11 +24,11 @@ module.exports = async function (context, req) {
         const containerClient = blobServiceClient.getContainerClient(containerName);
         const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-        // Download blob content to a Buffer (simplest in Node)
+        // Download blob content to a Buffer 
         context.log(`Downloading blob '${blobName}' from container '${containerName}'`);
         const resumeBuffer = await blockBlobClient.downloadToBuffer();
 
-        // Return the PDF as a binary response
+        // Return the PDF as a binary 
         context.res = {
             status: 200,
             body: resumeBuffer,
